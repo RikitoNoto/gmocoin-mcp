@@ -6,14 +6,22 @@ from gmo_fx.api.klines import KlinesApi
 
 
 def register_kline_tools(mcp: FastMCP) -> None:
-    @mcp.tool()
+    @mcp.tool(
+        description=(
+            "GMO Coin FXのKline APIです。ローソク足、OHLC、価格履歴、"
+            "為替レート履歴、チャート用の時系列データを取得します。"
+            "price_typeは必須です（BID/ASK）。"
+            "dateはYYYY-MM-DD形式で指定してください。"
+        ),
+        tags={"kline", "candlestick", "ohlc", "chart", "market-data"},
+    )
     def kline_api(
         symbol: KlinesApi.Symbol,
         price_type: Literal["BID", "ASK"],
         interval: KlinesApi.KlineInterval,
         date: str,
     ) -> list[dict[str, str | float]]:
-        """GMO CoinのKline(ローソク足)を取得します。dateはYYYY-MM-DD形式で指定してください。"""
+        """GMO Coin FXのKlineデータを取得します。"""
         api = KlinesApi()
         parsed_date = datetime.strptime(date, "%Y-%m-%d")
 

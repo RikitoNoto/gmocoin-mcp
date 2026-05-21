@@ -38,6 +38,11 @@ async def test_registers_kline_api_tool():
         "interval",
         "date",
     }
+    description = tool.description or ""
+    assert "price_typeは必須" in description
+    assert "ローソク足" in description
+    assert "OHLC" in description
+    assert "dateはYYYY-MM-DD形式" in description
 
 
 @pytest.mark.anyio
